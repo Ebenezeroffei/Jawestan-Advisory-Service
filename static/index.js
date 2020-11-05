@@ -3,16 +3,17 @@ class Control{
     constructor(){
         // Hide the phone menu
         $('#phone-menu').slideUp(0);
-        // Hide the phone menu submenu
+//         Hide the phone menu submenu
         $('.special-phone-menu').find('ul').slideUp(0);
         this.windowSize();
         this.toggleSubMenu();
         this.togglePhoneMenuSubMenu();
+        this.pageLocation();
     }
     
     windowSize(){
         window.onresize = () => {
-            if(window.innerWidth > 700){
+            if(window.innerWidth > 750){
                 // Hide the phone menu
                 $('#phone-menu').slideUp(0);
                 // Hide the phone menu submenu
@@ -23,6 +24,36 @@ class Control{
         }
     }
     
+
+    // This function will move the page to a specific location based on the scroll
+    pageLocation(){
+        // Get the menu items
+        let home = $('#home')[0];
+        let ourServices = $('#our-services')[0];
+        let contactUs = $('#contact-us')[0];
+        // When the page is beign scrolled
+        window.onscroll = () => {
+            // We have gotten to the home section of the page
+            if(home.getBoundingClientRect().bottom > 100){
+                $("#nav a[href = '#home']").css('color','#1b78c0');
+                $("#nav li[class = 'special']").find('span').css('color','#1b1d22');
+                $("#nav a[href = '#contact-us']").css('color','#1b1d22');
+            }
+            // We have gotten to the services section of the page
+            else if(ourServices.getBoundingClientRect().bottom > 100){
+                $("#nav a[href = '#home']").css('color','#1b1d22');
+                $("#nav li[class = 'special']").find('span').css('color','#1b78c0');
+                $("#nav a[href = '#contact-us']").css('color','#1b1d22');
+            }
+            // We have gotten to the contact us section of the page
+            else if(contactUs.getBoundingClientRect().bottom > 100){
+                $("#nav a[href = '#home']").css('color','#1b1d22');
+                $("#nav li[class = 'special']").find('span').css('color','#1b1d22');
+                $("#nav a[href = '#contact-us']").css('color','#1b78c0');
+            }
+        }
+    }
+
     // A function that opens the submenu
     toggleSubMenu(){
         $('#hamburger').click(function(){
